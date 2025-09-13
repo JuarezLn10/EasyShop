@@ -46,7 +46,6 @@ import androidx.compose.ui.unit.dp
 import pe.edu.upc.easyshop.R
 import pe.edu.upc.easyshop.core.ui.components.ProductCard
 import pe.edu.upc.easyshop.core.ui.components.RoundedICon
-import pe.edu.upc.easyshop.shared.models.Product
 import pe.edu.upc.easyshop.core.ui.theme.EasyShopTheme
 import pe.edu.upc.easyshop.shared.models.products
 
