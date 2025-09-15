@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import pe.edu.upc.easyshop.shared.models.Product
+import pe.edu.upc.easyshop.shared.domain.models.Product
 
 @Composable
 fun ProductCard(product: Product) {

@@ -1,4 +1,4 @@
-package pe.edu.upc.easyshop.shared.models
+package pe.edu.upc.easyshop.shared.domain.models
 
 data class Product(
     val name: String,
