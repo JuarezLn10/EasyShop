@@ -20,9 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import pe.edu.upc.easyshop.core.ui.theme.EasyShopTheme
+import pe.edu.upc.easyshop.features.home.presentation.Home
 
 @Composable
-fun Main() {
+fun Main(
+    onClick: () -> Unit
+) {
 
     val buttonNavigationItems = listOf(
         ButtonNavigationItem.Home,
@@ -56,7 +59,7 @@ fun Main() {
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
-
+            Home (onClick)
         }
     }
 }
@@ -74,6 +77,6 @@ sealed class ButtonNavigationItem(val icon: ImageVector,
 @Composable
 fun MainPreview() {
     EasyShopTheme {
-        Main()
+        Main() {}
     }
 }

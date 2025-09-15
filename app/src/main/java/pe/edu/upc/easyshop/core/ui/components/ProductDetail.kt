@@ -1,4 +1,4 @@
-package pe.edu.upc.easyshop.core.ui
+package pe.edu.upc.easyshop.core.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
