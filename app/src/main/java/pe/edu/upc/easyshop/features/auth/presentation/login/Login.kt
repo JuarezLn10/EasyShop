@@ -1,4 +1,4 @@
-package pe.edu.upc.easyshop.features.auth.presentation
+package pe.edu.upc.easyshop.features.auth.presentation.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
