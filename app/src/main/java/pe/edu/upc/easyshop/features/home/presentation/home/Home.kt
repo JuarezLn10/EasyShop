@@ -50,7 +50,7 @@ import pe.edu.upc.easyshop.R
 import pe.edu.upc.easyshop.core.ui.components.ProductCard
 import pe.edu.upc.easyshop.core.ui.components.RoundedICon
 import pe.edu.upc.easyshop.core.ui.theme.EasyShopTheme
-import pe.edu.upc.easyshop.features.home.presentation.dependencyinjection.PresentationModule.getHomeViewModel
+import pe.edu.upc.easyshop.features.home.presentation.di.PresentationModule.getHomeViewModel
 
 @Composable
 fun Home(
