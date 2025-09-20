@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import pe.edu.upc.easyshop.core.root.Main
 import pe.edu.upc.easyshop.core.ui.theme.EasyShopTheme
-import pe.edu.upc.easyshop.features.auth.presentation.Login
+import pe.edu.upc.easyshop.features.auth.presentation.login.Login
 
 @Composable
 fun AppNavigation() {
