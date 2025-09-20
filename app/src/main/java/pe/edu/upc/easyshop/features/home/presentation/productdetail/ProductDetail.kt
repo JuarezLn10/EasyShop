@@ -1,4 +1,4 @@
-package pe.edu.upc.easyshop.features.home.presentation
+package pe.edu.upc.easyshop.features.home.presentation.productdetail
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -26,13 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import pe.edu.upc.easyshop.core.ui.components.RoundedICon
-import pe.edu.upc.easyshop.core.ui.theme.EasyShopTheme
 import pe.edu.upc.easyshop.shared.domain.models.Product
-import pe.edu.upc.easyshop.shared.domain.models.products
 
 @Composable
 fun ProductDetail(product: Product) {
@@ -127,13 +124,5 @@ fun ProductDetail(product: Product) {
                 RoundedICon(Icons.Default.Add)
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ProductDetailPreview() {
-    EasyShopTheme {
-        ProductDetail(products[0])
     }
 }

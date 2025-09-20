@@ -1,4 +1,4 @@
-package pe.edu.upc.easyshop.features.home.data.remote
+package pe.edu.upc.easyshop.features.home.data.remote.models
 
 data class ProductDto(
     val availabilityStatus: String?,
@@ -8,17 +8,17 @@ data class ProductDto(
     val dimensions: DimensionsDto?,
     val discountPercentage: Double?,
     val id: Int?,
-    val images: List<String?>?,
-    val metaDto: MetaDto?,
+    val images: List<String>?,
+    val meta: MetaDto?,
     val minimumOrderQuantity: Int?,
     val price: Double?,
     val rating: Double?,
     val returnPolicy: String?,
-    val reviewDto: List<ReviewDto?>?,
+    val reviews: List<ReviewDto>?,
     val shippingInformation: String?,
     val sku: String?,
     val stock: Int?,
-    val tags: List<String?>?,
+    val tags: List<String>?,
     val thumbnail: String?,
     val title: String?,
     val warrantyInformation: String?,

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -23,23 +22,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import pe.edu.upc.easyshop.shared.domain.models.Product
-import pe.edu.upc.easyshop.shared.domain.models.products
 
 @Composable
 fun ProductCard(
     product: Product,
     onClick: () -> Unit
 ) {
-    Card (
+    Card(
         modifier = Modifier.padding(8.dp),
         onClick = onClick
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -79,18 +76,6 @@ fun ProductCard(
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun ProductCardPreview() {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2)
-    ) {
-        items(products) {
-                products -> ProductCard(products) {}
         }
     }
 }
