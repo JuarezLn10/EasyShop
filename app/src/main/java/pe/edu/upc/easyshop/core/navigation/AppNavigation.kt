@@ -2,6 +2,7 @@ package pe.edu.upc.easyshop.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,17 +10,16 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import pe.edu.upc.easyshop.core.root.Main
 import pe.edu.upc.easyshop.core.ui.theme.EasyShopTheme
-import pe.edu.upc.easyshop.features.auth.presentation.di.PresentationModule.getLoginViewModel
 import pe.edu.upc.easyshop.features.auth.presentation.login.Login
-import pe.edu.upc.easyshop.features.home.presentation.di.PresentationModule.getProductDetailViewModel
+import pe.edu.upc.easyshop.features.auth.presentation.login.LoginViewModel
 import pe.edu.upc.easyshop.features.home.presentation.productdetail.ProductDetail
+import pe.edu.upc.easyshop.features.home.presentation.productdetail.ProductDetailViewModel
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    val loginViewModel = getLoginViewModel()
-    val productDetailViewModel = getProductDetailViewModel()
+    val loginViewModel: LoginViewModel = hiltViewModel()
 
     NavHost(navController, startDestination = Route.Login.route) {
 
@@ -44,7 +44,7 @@ fun AppNavigation() {
 
             backStackEntry.arguments?.let { arguments ->
                 val productId = arguments.getInt(Route.ProductDetail.argument)
-                val productDetailViewModel = getProductDetailViewModel()
+                val productDetailViewModel: ProductDetailViewModel = hiltViewModel()
                 productDetailViewModel.getProductById(productId)
                 ProductDetail(productDetailViewModel)
             }

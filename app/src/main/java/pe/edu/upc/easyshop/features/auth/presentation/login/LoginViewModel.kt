@@ -2,13 +2,17 @@ package pe.edu.upc.easyshop.features.auth.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import pe.edu.upc.easyshop.common.utils.Resource
 import pe.edu.upc.easyshop.features.auth.domain.models.User
 import pe.edu.upc.easyshop.features.auth.domain.repositories.AuthRepository
+import javax.inject.Inject
 
-class LoginViewModel(private val repository: AuthRepository): ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor (private val repository: AuthRepository): ViewModel() {
     private val _username = MutableStateFlow("")
     val username: StateFlow<String> = _username
 
@@ -28,7 +32,12 @@ class LoginViewModel(private val repository: AuthRepository): ViewModel() {
 
     fun login() {
         viewModelScope.launch {
-            _user.value = repository.login(_username.value, _password.value)
+            val resource = repository.login(_username.value, _password.value)
+
+            when (resource) {
+                is Resource.Success -> _user.value = resource.data
+                is Resource.Error -> _user.value = null
+            }
         }
     }
 }

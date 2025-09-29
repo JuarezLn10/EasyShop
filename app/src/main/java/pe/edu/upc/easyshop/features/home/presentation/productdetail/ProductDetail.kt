@@ -29,11 +29,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil3.compose.AsyncImage
 import pe.edu.upc.easyshop.core.ui.components.RoundedIcon
 
 @Composable
-fun ProductDetail(viewModel: ProductDetailViewModel) {
+fun ProductDetail(
+    viewModel: ProductDetailViewModel = hiltViewModel()
+) {
 
     val product = viewModel.product.collectAsState()
 
@@ -122,7 +125,4 @@ fun ProductDetail(viewModel: ProductDetailViewModel) {
             }
         }
     }
-
-
-
 }

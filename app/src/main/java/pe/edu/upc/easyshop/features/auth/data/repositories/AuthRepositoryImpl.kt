@@ -2,29 +2,34 @@ package pe.edu.upc.easyshop.features.auth.data.repositories
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import pe.edu.upc.easyshop.common.utils.Resource
 import pe.edu.upc.easyshop.features.auth.data.remote.models.LoginRequestDto
 import pe.edu.upc.easyshop.features.auth.data.remote.services.AuthService
 import pe.edu.upc.easyshop.features.auth.domain.models.User
 import pe.edu.upc.easyshop.features.auth.domain.repositories.AuthRepository
+import javax.inject.Inject
 
-class AuthRepositoryImpl(private val service: AuthService): AuthRepository {
+class AuthRepositoryImpl @Inject constructor (private val service: AuthService): AuthRepository {
     override suspend fun login(
         username: String,
         password: String
-    ): User? = withContext(Dispatchers.IO) {
+    ): Resource<User> = withContext(Dispatchers.IO) {
 
         val response = service.login(LoginRequestDto(username, password))
 
         if (response.isSuccessful) {
             response.body()?.let { loginResponseDto ->
-                User(
+                val user = User(
                     name = "${loginResponseDto.firstName ?: ""} ${loginResponseDto.lastName ?: ""} ",
                     email = loginResponseDto.email ?: "",
                     image = loginResponseDto.image ?: ""
                 )
+
+                return@withContext Resource.Success(data = user)
             }
+            return@withContext Resource.Error(message = "No data found!")
         }
 
-        return@withContext null
+        return@withContext Resource.Error(message = response.message())
     }
 }
