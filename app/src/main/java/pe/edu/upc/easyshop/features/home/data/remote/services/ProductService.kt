@@ -12,5 +12,5 @@ interface ProductService {
     suspend fun getAllProducts(): Response<ProductsWrapperDto>
 
     @GET("products/{id}")
-    suspend fun getProductById(@Path("id") id: Int): Response<ProductDto>
+    suspend fun getProductById(@Path("id") id: Int ): Response<ProductDto>
 }

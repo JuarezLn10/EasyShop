@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -43,21 +44,28 @@ fun ProductCard(
                 .height(256.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(MaterialTheme.colorScheme.inverseOnSurface)
-                .padding(8.dp)
         ) {
+
             Box(contentAlignment = Alignment.TopEnd) {
                 AsyncImage(
                     model = product.image,
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth().height(192.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(192.dp)
                 )
                 IconButton(onClick = {}) {
                     Icon(
-                        Icons.Default.FavoriteBorder,
+                        if (product.isFavorite) {
+                            Icons.Default.Favorite
+                        } else {
+                            Icons.Default.FavoriteBorder
+                        },
                         contentDescription = null,
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.background)
                             .padding(8.dp)
+
                     )
                 }
             }
@@ -75,7 +83,9 @@ fun ProductCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = 8.dp)
+
             )
         }
     }
+
 }

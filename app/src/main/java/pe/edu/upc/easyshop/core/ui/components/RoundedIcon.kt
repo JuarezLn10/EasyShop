@@ -14,7 +14,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RoundedICon(icon: ImageVector) {
+fun RoundedIcon(icon: ImageVector) {
+
     Box(
         modifier = Modifier
             .size(48.dp)

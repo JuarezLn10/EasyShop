@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Button
@@ -24,105 +25,104 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import pe.edu.upc.easyshop.core.ui.components.RoundedICon
-import pe.edu.upc.easyshop.shared.domain.models.Product
+import pe.edu.upc.easyshop.core.ui.components.RoundedIcon
 
 @Composable
-fun ProductDetail(product: Product) {
-    Scaffold(
-        floatingActionButton = {
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(
-                    onClick = {},
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = MaterialTheme.colorScheme.primary,
-                        containerColor = MaterialTheme.colorScheme.onPrimary
-                    ),
-                    border = BorderStroke(
-                        1.dp,
-                        MaterialTheme.colorScheme.primary
-                    )
-                ) {
-                    Text("Add to cart")
-                }
+fun ProductDetail(viewModel: ProductDetailViewModel) {
 
-                Spacer(modifier = Modifier.width(16.dp))
+    val product = viewModel.product.collectAsState()
 
-                Button(
-                    onClick = {},
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text("Buy now")
-                }
-            }
-        },
-        floatingActionButtonPosition = FabPosition.Center
-
-    ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
-            Box(contentAlignment = Alignment.TopEnd) {
-                AsyncImage(
-                    model = product.image,
-                    contentDescription = null,
+    product.value?.let { product ->
+        Scaffold(
+            floatingActionButton = {
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(256.dp)
-                        .background(MaterialTheme.colorScheme.secondaryContainer)
-                )
-
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier.padding(8.dp)
+                        .padding(horizontal = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Icon(
-                        Icons.Default.FavoriteBorder,
+                    Button(
+                        onClick = {}, modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            contentColor = MaterialTheme.colorScheme.primary,
+                            containerColor = MaterialTheme.colorScheme.onPrimary
+                        ),
+                        border = BorderStroke(
+                            1.dp,
+                            MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text("Add to cart")
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {}, modifier = Modifier.weight(1f)) {
+                        Text("Buy now")
+                    }
+                }
+            },
+            floatingActionButtonPosition = FabPosition.Center
+
+        ) { paddingValues ->
+            Column(modifier = Modifier.padding(paddingValues)) {
+                Box(contentAlignment = Alignment.TopEnd) {
+                    AsyncImage(
+                        model = product.image,
                         contentDescription = null,
                         modifier = Modifier
-                            .background(MaterialTheme.colorScheme.background)
-                            .padding(8.dp)
+                            .fillMaxWidth()
+                            .height(256.dp)
+                            .background(MaterialTheme.colorScheme.secondaryContainer)
                     )
+
+                    IconButton(
+                        onClick = {
+                            viewModel.toggleFavorite()
+                        },
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Icon(
+                            if (product.isFavorite) {
+                                Icons.Default.Favorite
+                            } else {
+                                Icons.Default.FavoriteBorder
+                            },
+                            contentDescription = null,
+                            modifier = Modifier
+                                .background(MaterialTheme.colorScheme.background)
+                                .padding(8.dp)
+                        )
+                    }
                 }
-            }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth().padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(product.name, style = MaterialTheme.typography.titleMedium)
+                    Text("$ ${product.price}", style = MaterialTheme.typography.titleMedium)
+                }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    product.name,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Text(
-                    "$ ${product.price}",
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
-            ) {
-                RoundedICon(Icons.Default.Remove)
-                Text(
-                    "1",
-                    modifier = Modifier.padding(8.dp)
-                )
-                RoundedICon(Icons.Default.Add)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding( 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    RoundedIcon(Icons.Default.Remove)
+                    Text("1", modifier = Modifier.padding(horizontal = 8.dp))
+                    RoundedIcon(Icons.Default.Add)
+                }
             }
         }
     }
+
+
+
 }

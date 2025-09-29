@@ -24,60 +24,62 @@ import pe.edu.upc.easyshop.features.home.presentation.di.PresentationModule.getH
 import pe.edu.upc.easyshop.features.home.presentation.home.Home
 
 @Composable
-fun Main(
-    onClick: () -> Unit
-) {
+fun Main(onClick: (Int) -> Unit) {
 
-    val buttonNavigationItems = listOf(
-        ButtonNavigationItem.Home,
-        ButtonNavigationItem.Favorite,
-        ButtonNavigationItem.Cart,
-        ButtonNavigationItem.Profile
+    val bottomNavigationItems = listOf(
+        BottomNavigationItem.Home,
+        BottomNavigationItem.Favorite,
+        BottomNavigationItem.Cart,
+        BottomNavigationItem.Profile
     )
 
     val selectedItem = remember {
-        mutableStateOf<ButtonNavigationItem>(ButtonNavigationItem.Home)
+        mutableStateOf<BottomNavigationItem>(BottomNavigationItem.Home)
     }
-
     Scaffold(
         bottomBar = {
             BottomAppBar {
-                buttonNavigationItems.forEach { item ->
+
+                bottomNavigationItems.forEach { item ->
                     NavigationBarItem(
-                    selected = item == selectedItem.value,
-                    onClick = {
-                        selectedItem.value = item
-                    },
-                    icon = {
-                        Icon(item.icon, contentDescription = item.label)
-                    },
-                    label = {
-                        Text(text = item.label)
-                    }
-                )
+                        selected = item == selectedItem.value,
+                        onClick = {
+                            selectedItem.value = item
+                        },
+                        icon = {
+                            Icon(
+                                item.icon,
+                                contentDescription = item.label
+                            )
+                        },
+                        label = {
+                            Text(item.label)
+                        }
+                    )
                 }
             }
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
-            Home (getHomeViewModel(), onClick)
+            Home(getHomeViewModel(), onClick)
         }
     }
 }
 
-sealed class ButtonNavigationItem(val icon: ImageVector,
-                                  val label: String
+sealed class BottomNavigationItem(
+    val icon: ImageVector,
+    val label: String
 ) {
-    object Home: ButtonNavigationItem(Icons.Default.Home, "Home")
-    object Favorite: ButtonNavigationItem(Icons.Default.Favorite, "Favorite")
-    object Cart: ButtonNavigationItem(Icons.Default.ShoppingCart, "Cart")
-    object Profile: ButtonNavigationItem(Icons.Default.Person, "Profile")
+    object Home : BottomNavigationItem(Icons.Default.Home, "Home")
+    object Favorite : BottomNavigationItem(Icons.Default.Favorite, "Favorite")
+    object Cart : BottomNavigationItem(Icons.Default.ShoppingCart, "Cart")
+    object Profile : BottomNavigationItem(Icons.Default.Person, "Profile")
 }
 
 @Preview
 @Composable
 fun MainPreview() {
     EasyShopTheme {
-        Main() {}
+        Main {}
     }
 }

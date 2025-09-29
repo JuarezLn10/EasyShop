@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,16 +49,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pe.edu.upc.easyshop.R
 import pe.edu.upc.easyshop.core.ui.components.ProductCard
-import pe.edu.upc.easyshop.core.ui.components.RoundedICon
+import pe.edu.upc.easyshop.core.ui.components.RoundedIcon
 import pe.edu.upc.easyshop.core.ui.theme.EasyShopTheme
 import pe.edu.upc.easyshop.features.home.presentation.di.PresentationModule.getHomeViewModel
 
 @Composable
 fun Home(
     viewModel: HomeViewModel,
-    onClick: () -> Unit
+    onClick: (Int) -> Unit
 ) {
-
     val search = remember {
         mutableStateOf("")
     }
@@ -65,6 +65,9 @@ fun Home(
     val selectedCategory = remember {
         mutableStateOf<Category>(Category.All)
     }
+
+    val products by viewModel.products.collectAsState()
+
 
     val categories = listOf(
         Category.All,
@@ -74,48 +77,49 @@ fun Home(
         Category.Girls
     )
 
-    val products by viewModel.products.collectAsState()
-
     Column(modifier = Modifier.fillMaxSize()) {
-        Row(modifier = Modifier.height(64.dp),
-            verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.height(64.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Box(
                 modifier = Modifier
                     .size(48.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(MaterialTheme.colorScheme.inversePrimary),
                 contentAlignment = Alignment.Center
+
             ) {
-                Icon(Icons.Default.Person,
+                Icon(
+                    Icons.Default.Person,
                     contentDescription = null,
                     modifier = Modifier.size(32.dp)
                 )
             }
-
             Column(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight(),
                 verticalArrangement = Arrangement.Center
             ) {
-                Text("Hello Farid",
+                Text(
+                    "Hello Alex",
                     style = MaterialTheme.typography.labelMedium,
                     color = Color.Gray
                 )
-                Text("Good morning!",
+                Text(
+                    "Good morning",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
             }
 
-            Row {
-                RoundedICon(icon = Icons.Outlined.Notifications)
-                RoundedICon(icon = Icons.Outlined.ShoppingCart)
-            }
+            RoundedIcon(icon = Icons.Outlined.Notifications)
+            RoundedIcon(icon = Icons.Outlined.ShoppingCart)
         }
 
-        Row(modifier = Modifier
-            .height(64.dp),
+        Row(
+            modifier = Modifier.height(64.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(
@@ -133,10 +137,13 @@ fun Home(
                 modifier = Modifier.weight(1f)
             )
 
-            RoundedICon(Icons.Outlined.FilterList)
+            RoundedIcon(Icons.Outlined.FilterList)
         }
 
-        Row(modifier = Modifier.height(64.dp).fillMaxWidth(),
+        Row(
+            modifier = Modifier
+                .height(64.dp)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -145,7 +152,6 @@ fun Home(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-
             TextButton(onClick = {}) {
                 Text(stringResource(R.string.button_see_all))
             }
@@ -156,7 +162,7 @@ fun Home(
                 FilterChip(
                     selected = category == selectedCategory.value,
                     onClick = {
-                        selectedCategory.value= category
+                        selectedCategory.value = category
                     },
                     label = {
                         Text(category.label)
@@ -165,77 +171,94 @@ fun Home(
                 )
             }
         }
-
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .height(192.dp)
-            .padding(8.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(Brush.linearGradient(colors = listOf(
-                    MaterialTheme.colorScheme.primary,
-                    MaterialTheme.colorScheme.inverseOnSurface
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(192.dp)
+                .padding(8.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .background(
+                    Brush.linearGradient(
+                        colors =
+                            listOf(
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.inverseOnSurface
+                            )
+                    )
                 )
-            ))
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-            Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically) {
-                Column(modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp)
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(16.dp)
                 ) {
-                    Text("Get your special sale up to 40%",
+                    Text(
+                        "Get your special sale up to 40%",
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.onPrimary,
-                        fontWeight = FontWeight.SemiBold)
+                        fontWeight = FontWeight.SemiBold
+                    )
                     ElevatedButton(onClick = {}) {
-                        Text("Shop Now")
+                        Text("Shop now")
                     }
                 }
+
                 Image(
                     painterResource(R.drawable.image115),
                     contentDescription = null,
-                    modifier = Modifier.weight(1f).fillMaxWidth()
+                    modifier = Modifier.weight(1f),
+                    contentScale = ContentScale.FillWidth
                 )
+
             }
         }
 
-        Row(modifier = Modifier.height(64.dp).fillMaxWidth(),
+        Row(
+            modifier = Modifier
+                .height(64.dp)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                "Popular",
+                stringResource(R.string.label_popular),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
-
             TextButton(onClick = {}) {
-                Text("See all")
+                Text(stringResource(R.string.button_see_all))
             }
         }
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2)
         ) {
-            items(products) { products ->
-                ProductCard(products, onClick)
+            items(products) { product ->
+                ProductCard(product) {
+                    onClick(product.id)
+                }
             }
         }
     }
 }
 
 sealed class Category(val label: String) {
-    object All: Category("All")
-    object Men: Category("Men")
-    object Women: Category("Women")
-    object Boys: Category("Boys")
-    object Girls: Category("Girls")
+    object All : Category("All")
+    object Men : Category("Men")
+    object Women : Category("Women")
+    object Boys : Category("Boys")
+    object Girls : Category("Girls")
 }
 
 @Preview
 @Composable
 fun HomePreview() {
-    EasyShopTheme(dynamicColor = false) {
-        Home(getHomeViewModel()) {}
+    EasyShopTheme(dynamicColor = false)
+    {
+        Home(getHomeViewModel()){}
     }
 }

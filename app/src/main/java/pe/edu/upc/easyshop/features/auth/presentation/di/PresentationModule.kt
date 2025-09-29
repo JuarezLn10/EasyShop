@@ -4,7 +4,7 @@ import pe.edu.upc.easyshop.features.auth.data.di.DataModule.getAuthRepository
 import pe.edu.upc.easyshop.features.auth.presentation.login.LoginViewModel
 
 object PresentationModule {
-    fun getAuthViewModel(): LoginViewModel {
+    fun getLoginViewModel(): LoginViewModel {
         return LoginViewModel(getAuthRepository())
     }
 }
